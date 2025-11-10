@@ -16,7 +16,7 @@ public class LlmClient implements Serializable {
 
     public LlmClient() {
 
-        String apiKey = System.getenv("GEMINI_KEY");
+        String apiKey = System.getenv("GEMINI_API_KEY");
 
         ChatModel model = GoogleAiGeminiChatModel.builder()
                 .apiKey(apiKey)

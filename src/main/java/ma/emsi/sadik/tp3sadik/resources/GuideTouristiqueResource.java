@@ -15,9 +15,15 @@ public class GuideTouristiqueResource {
 
     @GET
     @Path("/lieu/{villeOuPays}")
-    public Response villeOuPays(@PathParam("villeOuPays") String villeOuPays) {
+    public Response villeOuPays(
+            @PathParam("villeOuPays") String villeOuPays,
+            @QueryParam("nb") @DefaultValue("2") int nb) {
         try {
-            String resultat = llmClient.getInformations(villeOuPays);
+            String prompt = String.format(
+                    "Donne les %d principaux endroits à visiter à %s et le prix moyen d'un repas dans la devise locale.",
+                    nb, villeOuPays
+            );
+            String resultat = llmClient.getInformations(prompt);
             return Response.ok(resultat).build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
@@ -25,4 +31,5 @@ public class GuideTouristiqueResource {
                     .build();
         }
     }
+
 }
